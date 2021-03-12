@@ -2,8 +2,8 @@
 
 Made by:
 
-- DONOU Dario
-- CAUMES Kirian
+- TOUZÉ Gurvan
+- DIJOUX Quentin
 
 Link to [Frontend](https://github.com/Gembani/modern-intra) on branch [feature_crud_user](https://github.com/Gembani/modern-intra/commits/feature_crud_user)
 
