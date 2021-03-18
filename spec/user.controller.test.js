@@ -117,26 +117,32 @@ describe('Use Controller', () => {
                 .set("Content-Type", "application/vnd.api+json")
         ).body?.data?.id
 
-        const res = await request(app)
-            .post('/api/users?includes=companies')
-            .send({
-                data: {
-                    ...user.data,
-                    relationships: {
-                        companyId: {
-                            data: {
-                                id: companyId,
-                                type: "companies"
+        const userId = (
+            await request(app)
+                .post('/api/users')
+                .send({
+                    data: {
+                        ...user.data,
+                        relationships: {
+                            companyId: {
+                                data: {
+                                    id: companyId,
+                                    type: "companies"
+                                }
                             }
                         }
                     }
-                }
-            })
-            .set("Content-Type", "application/vnd.api+json")
+                })
+                .set("Content-Type", "application/vnd.api+json")
+        ).body?.data?.id
 
-        expect(res.status).toEqual(201)
+        const res = await request(app)
+            .get(`/api/users/${userId}?include=companyId`)
+
+        expect(res.status).toEqual(200)
         expect(res.body?.data?.id).toBeDefined()
         expect(res.body?.data?.relationships?.companyId?.data?.id).toEqual(companyId)
+        expect(res.body?.included?.[0]?.id).toEqual(companyId)
         done()
     })
 
